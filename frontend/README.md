@@ -1,4 +1,4 @@
-# Guia de Execução Local do Frontend (React + Vite)
+    # Guia de Execução Local do Frontend (React + Vite)
 
 Olá! Este guia detalha como executar **apenas o frontend** da aplicação diretamente na sua máquina, sem o uso de Docker.
 
