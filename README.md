@@ -8,12 +8,18 @@
 | Leonardo Valverde de Oliveira | 2310169 |
 | Luiz Antônio de Paula Gomes | 2310406 |
 | Prem Babar | 2310695 |
-    
+
 ---
 
 ## 🎯 Objetivo
 
-Containerizar uma aplicação completa (Frontend, Backend e Banco de Dados) utilizando Docker, garantindo comunicação entre os serviços através de rede customizada.
+Aplicar conceitos de sistemas distribuídos através da conteinerização de uma aplicação completa, separando:
+
+* Frontend
+* Backend
+* Banco de Dados
+
+Garantindo comunicação entre os serviços via rede Docker.
 
 ---
 
@@ -21,15 +27,17 @@ Containerizar uma aplicação completa (Frontend, Backend e Banco de Dados) util
 
 * Frontend → Nginx (porta 8080)
 * Backend → Node.js + Express (porta 3001)
-* Banco → PostgreSQL (porta 5432)
+* Banco de Dados → PostgreSQL (porta 5432)
 
 ---
 
 ## ⚙️ Pré-requisitos
 
-* Docker instalado
+Antes de começar, instale:
 
-Verificar:
+* Docker Desktop
+
+Verifique a instalação:
 
 ```bash
 docker --version
@@ -37,18 +45,18 @@ docker --version
 
 ---
 
-## 🚀 Passo a passo de execução
+# 🚀 PASSO A PASSO DE EXECUÇÃO
 
-### 1. Clonar o projeto
+## 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/oLopesAlvaro/tarefas-docker.git
-cd tarefas-docker
+git clone https://github.com/prembabar/trabalho_pratico_2
+cd trabalho_pratico_2
 ```
 
 ---
 
-### 2. Criar rede Docker
+## 2. Criar rede Docker
 
 ```bash
 docker network create minha-rede
@@ -56,15 +64,14 @@ docker network create minha-rede
 
 ---
 
-### 3. Rodar banco de dados
+## 3. Subir Banco de Dados (PostgreSQL)
 
 ```bash
 docker run -d --name postgres --network minha-rede -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=tarefas -v postgres_data:/var/lib/postgresql/data -p 5432:5432 postgres:15
 ```
-
 ---
 
-### 4. Build do Backend
+## 4. Build do Backend
 
 ```bash
 cd backend
@@ -73,15 +80,20 @@ docker build -t backend-image .
 
 ---
 
-### 5. Rodar Backend
+## 5. Subir Backend
 
 ```bash
 docker run -d --name backend --network minha-rede -p 3001:3001 -e DB_HOST=postgres -e DB_USER=postgres -e DB_PASSWORD=admin -e DB_NAME=tarefas -e DB_PORT=5432 backend-image
 ```
 
+### 📌 Importante:
+
+* `DB_HOST=postgres` → nome do container do banco
+* Não usar `localhost`
+
 ---
 
-### 6. Build do Frontend
+## 6. Build do Frontend
 
 ```bash
 cd ../frontend
@@ -90,7 +102,7 @@ docker build -t frontend-image .
 
 ---
 
-### 7. Rodar Frontend
+## 7. Subir Frontend
 
 ```bash
 docker run -d --name frontend --network minha-rede -p 8080:80 frontend-image
@@ -98,16 +110,16 @@ docker run -d --name frontend --network minha-rede -p 8080:80 frontend-image
 
 ---
 
-## 🌐 Acesso
+# 🌐 ACESSO À APLICAÇÃO
 
 * Frontend: http://localhost:8080
 * Backend: http://localhost:3001
 
 ---
 
-## 🧪 Testes
+# 🧪 TESTES (PARA VALIDAÇÃO)
 
-### Verificar containers:
+## ✅ 1. Verificar containers ativos
 
 ```bash
 docker ps
@@ -121,32 +133,21 @@ Deve aparecer:
 
 ---
 
-### Testar aplicação
+## ✅ 2. Testar aplicação
 
-1. Acessar frontend
-2. Criar uma tarefa
-3. Verificar se aparece na lista
-
----
-
-### Testar persistência
-
-1. Parar containers:
-
-```bash
-docker stop frontend backend postgres
-```
-
-2. Subir novamente (passos 3 a 7)
-
-3. Verificar se tarefas continuam
+1. Acesse o frontend
+2. Crie uma nova tarefa
+3. Verifique se aparece na lista
 
 ---
 
-## 📌 Observações
+# 🏁 CONCLUSÃO
 
-* Containers se comunicam pelo nome
-* Não utilizar localhost entre containers
-* Banco de dados possui persistência via volume Docker
+Este projeto possui:
+
+* Containerização completa
+* Arquitetura distribuída
+* Comunicação entre serviços
+* Persistência de dados
 
 ---
