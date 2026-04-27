@@ -47,6 +47,8 @@ docker --version
 
 # 🚀 PASSO A PASSO DE EXECUÇÃO
 
+O repositório possui um .env com configurações padrões, caso necessários, altere apenas o que precisa para a sua máquina
+
 ## 1. Clonar o repositório
 
 ```bash
